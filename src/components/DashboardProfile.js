@@ -1,6 +1,7 @@
 import {
   Dimensions,
   Image,
+  ImageBackground,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -42,54 +43,62 @@ const DashboardProfile = ({data, hideStatus, hideAction}) => {
   return (
     <View style={styles.userWrapper}>
       <View style={styles.userContainer}>
-        <View style={styles.optionContainer}>
-          <AppText
-            label={strings.welcomeToFaforlife}
-            fontFamily={Montserrat.SemiBold}
-            size={'regular'}
-            color={colors.white}
-          />
-        </View>
-        <View style={styles.walletContainer}>
-          <Image source={images.walletCircle} style={styles.walletIcon} />
-          <AppText
-            label={strings.walletBalance}
-            fontFamily={Montserrat.SemiBold}
-            color={colors.green}
-          />
-        </View>
-        <AppText
-          label={data?.balance}
-          size={'huge'}
-          fontFamily={Montserrat.SemiBold}
-          color={colors.white}
-          underline
-        />
-        <View style={styles.profileWrapper}>
-          <Image source={images.userPlaceholder} style={styles.userProfile} />
-          <View>
+        <ImageBackground
+          source={require('../assets/images/background2.jpg')}
+          resizeMode="cover"
+          style={{...styles.userContainer}}
+        >
+          <View style={styles.userTopContainer}>
+            <View style={styles.optionContainer}>
+              <AppText
+                label={strings.welcomeToFaforlife}
+                fontFamily={Montserrat.SemiBold}
+                size={'regular'}
+                color={colors.white}
+              />
+            </View>
+            <View style={styles.walletContainer}>
+              <Image source={images.walletCircle} style={styles.walletIcon} />
+              <AppText
+                label={strings.walletBalance}
+                fontFamily={Montserrat.SemiBold}
+                color={colors.green}
+              />
+            </View>
             <AppText
-              label={data?.name}
-              size={'medium'}
-              fontFamily={Montserrat.Bold}
+              label={data?.balance}
+              size={'huge'}
+              fontFamily={Montserrat.SemiBold}
               color={colors.white}
-              textStyles={styles.name}
+              underline
             />
-            {hideStatus ? (
-              <AppText
-                label={data?.place_id}
-                fontFamily={Montserrat.Bold}
-                color={colors.green}
-              />
-            ) : (
-              <AppText
-                label={data?.active == 1 ? strings.online : null}
-                fontFamily={Montserrat.Bold}
-                color={colors.green}
-              />
-            )}
+            <View style={styles.profileWrapper}>
+              <Image source={images.userPlaceholder} style={styles.userProfile} />
+              <View>
+                <AppText
+                  label={data?.name}
+                  size={'medium'}
+                  fontFamily={Montserrat.Bold}
+                  color={colors.white}
+                  textStyles={styles.name}
+                />
+                {hideStatus ? (
+                  <AppText
+                    label={data?.place_id}
+                    fontFamily={Montserrat.Bold}
+                    color={colors.green}
+                  />
+                ) : (
+                  <AppText
+                    label={data?.active == 1 ? strings.online : null}
+                    fontFamily={Montserrat.Bold}
+                    color={colors.green}
+                  />
+                )}
+              </View>
+            </View>
           </View>
-        </View>
+        </ImageBackground>
       </View>
       {!hideAction && (
         <View style={styles.profileFooter}>
@@ -119,9 +128,9 @@ export default DashboardProfile;
 const styles = StyleSheet.create({
   userContainer: {
     height: verticalScale(190),
-    paddingLeft: (25),
-    paddingRight: (25),
-    paddingTop: (10),
+    // paddingLeft: (25),
+    // paddingRight: (25),
+    // paddingTop: (10),
     backgroundColor: 'orange',
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10
@@ -129,10 +138,15 @@ const styles = StyleSheet.create({
   userWrapper: {
     height: verticalScale(230),
     width: scale(280),
-    marginHorizontal: moderateWidth(11),
+    marginHorizontal: moderateWidth(10),
     backgroundColor: '#ffffff',
     display:'flex',
     flexDirection: 'column',
+  },
+  userTopContainer: {
+    paddingLeft: (25),
+    paddingRight: (25),
+    paddingTop: (10),
   },
   optionContainer: {
     flexDirection: 'row',

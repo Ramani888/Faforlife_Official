@@ -30,6 +30,7 @@ import {
   scale,
   verticalScale,
 } from '../../utils/responsive';
+import images from '../../themes/images';
 
 const DashboardScreen = ({navigation}) => {
   const [userData, setUserData] = useState({});
@@ -61,7 +62,14 @@ const DashboardScreen = ({navigation}) => {
         onPress={() => navigation?.toggleDrawer()}>
         <SimpleIcon name={'menu'} size={25} color={colors.white} />
       </TouchableOpacity>
-      <View style={styles.headercontainer}></View>
+      <View style={styles.headercontainer}>
+        <ImageBackground
+          source={require('../../assets/images/background2.jpg')}
+          resizeMode="cover"
+          style={styles.headercontainer}
+        >
+        </ImageBackground>
+      </View>
       <View style={styles.dashboardProfileContainer}>
         <DashboardProfile data={userData} />
       </View>
@@ -172,6 +180,7 @@ const styles = StyleSheet.create({
     height: verticalScale(240),
     borderBottomLeftRadius: scale(50),
     borderBottomRightRadius: scale(50),
+    overflow: 'hidden',
   },
   menuContainer: {
     position: 'absolute',
