@@ -51,7 +51,7 @@ const UpgradePackageSelection = ({
   const next = () => {
     if (selectedPackage) {
       nextStep(selectedPackage, 'packageSelection');
-      global.upgradePackageId = setSelectedPackage;
+      global.upgradePackageId = selectedPackage;
     } else {
       showMessageonTheScreen('Please select the package');
     }

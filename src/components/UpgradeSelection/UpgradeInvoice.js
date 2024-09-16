@@ -73,27 +73,31 @@ const UpgradeInvoice = ({
     try {
       setVisible(true);
       const dataObject = {
-          user_id: global.userData?.id,
-          region_id: global.upgradeRegion,
-          agency_code: global.upgradeAgencyCode,
-          package_id: global.upgradePackageId,
-          total_payment: totalAmount,
-          upgrade_pv: '10',
-          stockist_country: global.userData?.stockist_country,
-          upgrade_product_cart: sendCartData
+        user_id: global.userData?.id,
+        self_id: global?.userData?.self_id,
+        region_id: global.upgradeRegion,
+        agency_code: global.upgradeAgencyCode,
+        package_id: global.upgradePackageId,
+        total_payment: String(totalAmount),
+        upgrade_pv: PaymentOption?.find((item) => item?.key === 'Upgrade Package PV')?.value,
+        stockist_country: global.userData?.stockist_country,
+        upgrade_product_cart: sendCartData,
+        txn_pass: transaction
       }
       console.log('dataObject', dataObject);
       const response = await axiosInstanceForBussiness.post(
         `${apiRoutes.businessUpgrade}/${apiRoutes.upgradePayment}`,
         {
           user_id: global.userData?.id,
+          self_id: global?.userData?.self_id,
           region_id: global.upgradeRegion,
           agency_code: global.upgradeAgencyCode,
           package_id: global.upgradePackageId,
-          total_payment: totalAmount,
-          upgrade_pv: '10',
+          total_payment: String(totalAmount),
+          upgrade_pv: PaymentOption?.find((item) => item?.key === 'Upgrade Package PV')?.value,
           stockist_country: global.userData?.stockist_country,
-          upgrade_product_cart: sendCartData
+          upgrade_product_cart: sendCartData,
+          txn_pass: transaction
         },
       );
       console.log('response', response?.data);
