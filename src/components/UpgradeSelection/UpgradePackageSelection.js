@@ -35,7 +35,7 @@ const UpgradePackageSelection = ({
       setVisible(true);
       const response = await axiosInstanceForBussiness.post(
         `${apiRoutes.businessUpgrade}/${apiRoutes.upgradePackage}`,
-        {package_id: '3'},
+        {package_id: global?.userData?.package},
       );
       console.log('global', global?.userData)
       setPackageData(response?.data?.package);

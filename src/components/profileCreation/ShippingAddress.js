@@ -70,7 +70,7 @@ const ShippingAddress = ({
             placeholder="Select State"
             data={stateData}
             onSelect={selectedItem =>
-              setFieldValue('shippingState', selectedItem.state_name)
+              setFieldValue('shippingState', selectedItem.state_id)
             }
             selected={values.shippingState}
             errors={errors.shippingState}

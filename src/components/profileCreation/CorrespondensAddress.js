@@ -67,9 +67,10 @@ const CorrespondensAddress = ({
           <CustomDropDown
             placeholder="Select State"
             data={stateData}
-            onSelect={selectedItem =>
-              setFieldValue('state', selectedItem.state_name)
-            }
+            onSelect={selectedItem => {
+              console.log('selectedItem', selectedItem)
+              setFieldValue('state', selectedItem.state_id);
+            }}
             selected={values.state}
             errors={errors.state}
             touched={touched.state}

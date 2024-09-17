@@ -58,46 +58,24 @@ const WalletDeduct = ({previousStep, nextStep, currentPosition, labels}) => {
     }
   };
 
+  // const getAgencyData = async () => {
+  //   try {
+  //     const response = await axiosInstanceForBussiness.post(
+  //       `${apiRoutes.businessRegistration}/${apiRoutes.regisAgency}`,
+  //       {region_id: global.regionId},
+  //     );
+  //     setAgencyData(response?.data?.agency);
+  //   } catch (error) {
+  //     console.error('Error making POST request:', error);
+  //   }
+  // };
+
   const registerUser = async () => {
     try {
       setVisible(true);
-      const response = await axiosInstanceForBussiness.post(
-        `${apiRoutes.businessRegistration}/${apiRoutes.registerUser}`,
-        {
-          package_id: global?.selectedPackage,
-          sponser_id: global.sponsorId,
-          placement_id: global.placementId,
-          position: global.position,
-          country: global.countryId,
-          region_id: global.regionId,
-          self_col: global.agency,
-          username: global.userName,
-          name: global.name,
-          gender: global.gender,
-          dob: moment(global.dateOfBirth).format('YYYY-MM-DD'),
-          pass: global.password,
-          cpass: global.confirmPassword,
-          email: global.email,
-          mob: global.mobileNo,
-          address_1: global.addressLine1,
-          address_2: global.addressLine2,
-          state: global.state,
-          city: global.city,
-          saddress_1: global.shippingAddressLine1,
-          saddress_2: global.shippingAddressLine2,
-          sstate: global.shippingState,
-          scity: global.shippingCity,
-          acname: global.accountName,
-          bname: global.bankName,
-          branch: global.branchName,
-          account_no: global.accountNumber,
-          ifsc: global.ifscCode,
-          bitcoin_wallet_code: global.bitcoinWalletCode,
-          paypal_email: global.paypalEmail,
-          txn_pass: Number(transaction),
-          cart_items: global.cartData,
-          user_id: global.userData.id
-        },
+      const agencyResponse = await axiosInstanceForBussiness.post(
+        `${apiRoutes.businessRegistration}/${apiRoutes.regisAgency}`,
+        {region_id: global.regionId},
       );
       const registerObject = {
         package_id: global?.selectedPackage,
@@ -106,7 +84,7 @@ const WalletDeduct = ({previousStep, nextStep, currentPosition, labels}) => {
         position: global.position,
         country: global.countryId,
         region_id: global.regionId,
-        self_col: global.agency,
+        self_col: agencyResponse?.data?.agency?.find((item) => item?.agency_id === global.agency)?.agency_code,
         username: global.userName,
         name: global.name,
         gender: global.gender,
@@ -135,6 +113,44 @@ const WalletDeduct = ({previousStep, nextStep, currentPosition, labels}) => {
         user_id: global.userData.id
       }
       console.log('registerObject', registerObject)
+      const response = await axiosInstanceForBussiness.post(
+        `${apiRoutes.businessRegistration}/${apiRoutes.registerUser}`,
+        {
+          package_id: global?.selectedPackage,
+          sponser_id: global.sponsorId,
+          placement_id: global.placementId,
+          position: global.position,
+          country: global.countryId,
+          region_id: global.regionId,
+          self_col: agencyResponse?.data?.agency?.find((item) => item?.agency_id === global.agency)?.agency_code,
+          username: global.userName,
+          name: global.name,
+          gender: global.gender,
+          dob: moment(global.dateOfBirth).format('YYYY-MM-DD'),
+          pass: global.password,
+          cpass: global.confirmPassword,
+          email: global.email,
+          mob: global.mobileNo,
+          address_1: global.addressLine1,
+          address_2: global.addressLine2,
+          state: global.state,
+          city: global.city,
+          saddress_1: global.shippingAddressLine1,
+          saddress_2: global.shippingAddressLine2,
+          sstate: global.shippingState,
+          scity: global.shippingCity,
+          acname: global.accountName,
+          bname: global.bankName,
+          branch: global.branchName,
+          account_no: global.accountNumber,
+          ifsc: global.ifscCode,
+          bitcoin_wallet_code: global.bitcoinWalletCode,
+          paypal_email: global.paypalEmail,
+          txn_pass: Number(transaction),
+          cart_items: global.cartData,
+          user_id: global.userData.id
+        },
+      );
       console.log('response', response?.data)
       showMessageonTheScreen(response?.data?.msg);
       if(response?.data?.status == 200){
